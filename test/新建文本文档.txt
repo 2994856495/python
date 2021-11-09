@@ -1,0 +1,220 @@
+from collections import Iterable
+class Node:
+    def __init__(self, value, left=None, right=None):
+        self.value = value  # 节点的值
+        self.left = left  # 左子节点
+        self.right = right  # 右子节点
+
+
+
+
+
+class BinaryTree:
+
+    def __init__(self, seq=()):
+        assert isinstance(seq, Iterable)
+        self.root = None
+        self.insert(*seq)
+
+    def constructMaximumBinaryTree(self, nums):
+        if not nums:
+            return
+        max_num = max(nums)
+        max_index = nums.index(max_num)
+        root = Node(max_num)
+        root.left = self.constructMaximumBinaryTree(nums[:max_index])
+        root.right = self.constructMaximumBinaryTree(nums[max_index + 1:])
+        return root
+
+    def insert(self, *args):
+        if not args:
+            return
+        m=max(args)
+        args=list(args)
+        if not self.root:
+            self.root = Node(m)
+            args.remove(m)
+            # args = args[1:]
+        while args:
+            m = max(args)
+            seed = self.root
+            while True:
+                if m > seed.value:
+                    node = Node(m)
+                    node.right=seed
+                    # seed=node
+                    # seed.right = node
+                    break
+                else:
+                    if not seed.left:
+                        node = Node(m)
+                        seed.left = node
+                        break
+                    else:
+                        seed = seed.left
+            args.remove(m)
+
+    # def minNode(self):
+    #     node = self.root
+    #     while node.left:
+    #         node = node.left
+    #     return node
+    #
+    # def maxNode(self):
+    #     node = self.root
+    #     while node.right:
+    #         node = node.right
+    #     return node
+    # def find(self, item):
+    #         node = self.root
+    #         while node:
+    #             if item > node.value:
+    #                 node = node.right
+    #             elif item < node.value:
+    #                 node = node.left
+    #             else:
+    #                 return node
+
+    # def find(self, item, seed=None):
+    #     node = seed or self.root  # 修改查询起点
+    #     parent = None  # 父节点
+    #     while node:
+    #         if item > node.value:
+    #             parent, node = node, node.right
+    #         elif item < node.value:
+    #             parent, node = node, node.left
+    #         else:
+    #             return (node, parent)
+
+    # def minNode(self, seed=None):
+    #     node = seed or self.root
+    #     while node.left:
+    #         node = node.left
+    #     return node
+    #
+    # def maxNode(self, seed=None):
+    #     node = seed or self.root
+    #     while node.right:
+    #         node = node.right
+    #     return node
+    #
+    # def remove(self, item):
+    #     result = self.find(item)
+    #     if result:
+    #         new_node = None  # 替换 A 的节点
+    #         del_node, del_node_parent = result
+    #         if del_node.value == self.root.value:
+    #             raise ValueError('can not remove root')  # 根节点固定
+    #         if del_node.left and del_node.right:
+    #             right_min = self.minNode(seed=del_node.right)
+    #             new_node = Node(right_min.value)
+    #
+    #             # 当 A 节点的右子树节点没有子节点时，临时节点的右子节点 为 None
+    #             if del_node.right.value == new_node.value:
+    #                 new_node.left = del_node.left
+    #             else:
+    #                 new_node.left, new_node.right = del_node.left, del_node.right
+    #             self.remove(right_min.value)
+    #             # A 节点的父节点与临时节点关联
+    #
+    #         elif del_node.left or del_node.right:
+    #             new_node = del_node.left or del_node.right
+    #
+    #         if del_node_parent.left and del_node_parent.left.value == del_node.value:
+    #             del_node_parent.left = new_node
+    #         elif del_node_parent.right and del_node_parent.right.value == del_node.value:
+    #             del_node_parent.right = new_node
+    #         del del_node
+    #         return
+    #     raise ValueError('item not in tree')
+
+    def preorderTraversal(self, root):
+        res = []
+        if root is None:
+            return []
+
+        def preorder(tmp_tree):
+            if tmp_tree.left is None and tmp_tree.right is None:  # 当左右子树不存在是，说明该分支遍历到底部
+                res.append(tmp_tree.value)  # 将当前节点加入res
+                return
+
+            res.append(tmp_tree.value)  # 加入根节点
+
+            if tmp_tree.left is not None:  # 当左子树不为空是，继续前序遍历左子树
+                tmp_tree_new = tmp_tree.left  # 生成前序遍历的左子树
+                preorder(tmp_tree_new)  # 对新的子树递归调用前序遍历
+
+            if tmp_tree.right is not None:  # 左子树为空，根节点加入res，继续中前序遍历右子树
+                tmp_tree_new = tmp_tree.right  # 生成前序遍历的右子树
+                preorder(tmp_tree_new)  # 对新的子树递归调用前序遍历
+
+        preorder(root)
+        return res
+
+    # 中序遍历(中序遍历左子树->根节点->中序遍历右子树)
+    def inorderTraversal(self, root):
+        res = []
+        if root is None:
+            return []
+
+        def inorder(tmp_tree):
+            if tmp_tree.left is None and tmp_tree.right is None:  # 当左右子树不存在是，说明该分支遍历到底部
+                res.append(tmp_tree.value)  # 将当前节点加入res
+                return
+            if tmp_tree.left is not None:  # 当左子树不为空是，继续中序遍历左子树
+                tmp_tree_new = tmp_tree.left  # 生成中序遍历左子树
+                inorder(tmp_tree_new)  # 对新的子树递归调用中序遍历
+
+            res.append(tmp_tree.value)  # 加入根节点
+
+            if tmp_tree.right is not None:  # 左子树为空，根节点加入res，继续中序遍历右子树
+                tmp_tree_new = tmp_tree.right  # 生成中序遍历的右子树
+                inorder(tmp_tree_new)  # 对新的子树递归调用中序遍历
+
+        inorder(root)
+        return res
+
+    # 后序遍历(后序遍历左子树->后序序遍历右子树->根节点)
+    def postorderTraversal(self, root):
+        res = []
+        if root is None:
+            return []
+
+        def postorder(tmp_tree):
+            if tmp_tree.left is None and tmp_tree.right is None:  # 当左右子树不存在是，说明该分支遍历到底部
+                res.append(tmp_tree.value)  # 将当前节点加入res
+                return
+
+            if tmp_tree.left is not None:  # 当左子树不为空是，继续后序遍历左子树
+                tmp_tree_new = tmp_tree.left  # 生成后序序遍历的左子树
+                postorder(tmp_tree_new)  # 对新的子树递归调用后序遍历
+
+            if tmp_tree.right is not None:  # 左子树为空，根节点加入res，继续中后序遍历右子树
+                tmp_tree_new = tmp_tree.right  # 生成后序遍历的右子树
+                postorder(tmp_tree_new)  # 对新的子树递归调用后序遍历
+
+            res.append(tmp_tree.value)  # 加入根节点
+
+        postorder(root)
+        return res
+
+def tree_depth(tree):
+    if tree == None:
+        return 0
+    else:
+        return max(tree_depth(tree.left), tree_depth(tree.right)) + 1
+
+
+
+
+
+
+
+l=[6, 3, 5, 2, 0, 1]
+tree=BinaryTree()
+tree.root=tree.constructMaximumBinaryTree(l)
+
+print(tree.preorderTraversal(tree.root))
+print(tree.inorderTraversal(tree.root))
+print(tree.postorderTraversal(tree.root))
+print(tree_depth(tree.root))

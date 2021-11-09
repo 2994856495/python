@@ -1,0 +1,5 @@
+"G:\Software\Software\Edit\x64\UltraEdit18.x64\UltraEdit\Uedit32.exe" "%1"
+"G:\Software\Software\Edit\x64\UltraEdit18.x64\UltraEdit\Uedit32.exe" /p "%1"
+
+"G:\Software\Edit\64位\绿化\Uedit64.exe" "%1"
+"G:\Software\Edit\64位\绿化\Uedit64.exe" /p "%1"

@@ -1,0 +1,87 @@
+/* This only contains overrides to create a light style */
+
+body {
+  color: #5a5a5av;
+  background: #fbfbfb;
+  scrollbar-base-color: #fff;
+  scrollbar-face-color: #7f7f7f;
+  scrollbar-3dlight-color: #fff;
+  scrollbar-highlight-color: #fff;
+  scrollbar-track-color: #C1C1C1;
+  scrollbar-arrow-color: #fff;
+  scrollbar-shadow-color: #fff;
+  scrollbar-dark-shadow-color: #fff;
+}
+
+a:link, a:visited {
+  color: #7F7F7F;
+}
+
+a:hover, a:active {
+  color: #4c4c4c;
+}
+
+h1 {
+  color: #1979ca;
+}
+
+h2 {
+  color: #4c4c4c;
+}
+
+h3, h4 {
+  color: #4c4c4c;
+}
+img.thumb {
+  opacity: 0.65;
+  border: 1px solid #4b4b4b;
+}
+
+a.select:hover img.thumb,
+a.select:hover img.thumb_r {
+  opacity: .75;
+  border: 1px solid #272727;
+}
+
+a.select:hover h3,
+a.chosen h3 {
+  color: #1B1B1B;
+}
+
+a.chosen img.thumb,
+a.chosen:hover img.thumb {
+  opacity: 1;
+  border: 2px solid #585858;
+}
+
+/* Form styles */
+
+.s_form input[type=radio]:not(old) + label {
+  background: url('images/check_lt.png') no-repeat 0 0;
+  background-size: 21px 42px;
+}
+
+input[type=text] {
+  color: #616161;
+  background-color: #E7E7E2;
+  border: 1px solid #9F9F9B;
+}
+
+input[type=button] {
+  color: #7f7f7f;
+  font-weight: bold;
+  background-color: #E7E7E2;
+  border: 1px solid #C0C0BE;
+}
+
+input[type=button]:hover {
+  padding: 6px;
+  color: #585858;
+  background-color: #E7E7E2;
+  border: 1px solid #858585;
+}
+
+input[type=text]:focus {
+  color: #272727;
+  border-color: #494947;
+}
